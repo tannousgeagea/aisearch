@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  aisearch:
+    container_name: AISearch
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tannousgeagea/aisearch:latest
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    env_file: .env
+    networks:
+      - internal
+    ports:
+      - "5174:8080"
+    command: ["npm", "run", "dev", "--", "--host"]
+
+
+networks:
+  internal:
+    driver: bridge

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Home,
   Sparkles,
@@ -13,6 +13,7 @@ import {
   Shield,
   Server
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { UserProfileMenu } from '@/components/user/UserProfileMenu';
 import { authService } from '@/utils/auth';;
 
@@ -30,6 +31,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onLogout,
   isCollapsed 
 }) => {
+  const navigate = useNavigate();
   const mainItems = [
     { title: "Home", url: "", icon: Home },
     { title: "Caption Generator", url: "caption", icon: Sparkles },
@@ -38,11 +40,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { title: "About", url: "about", icon: Info },
   ];
 
+  const handleSignIn = () => {
+    navigate('/signin');
+  };
+
+  const handleSignUp = () => {
+    navigate('/signup');
+  };
+
 
   const currentUser = authService.getUser();
   return (
-    <div className={`bg-gradient-to-b from-slate-950 via-indigo-900 to-slate-900 border-r border-slate-700 transition-all duration-300 ${
-      isCollapsed ? 'w-16' : 'w-64'
+    <div className={`bg-gradient-to-b from-slate-950 via-indigo-900 to-slate-900 border-r border-slate-700 transition-all duration-500 ${
+      isCollapsed ? 'w-0' : 'w-64'
     } flex flex-col`}>
       {/* Logo */}
       <div className="p-4 border-b border-slate-600">
@@ -87,15 +97,33 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Logout */}
-      {currentUser &&
+      {currentUser ? (
         <div className="p-4 border-t border-slate-700">
           <UserProfileMenu 
             user={currentUser}
             isCollapsed={isCollapsed}
           />
         </div>
-      }
-
+      ) : (
+        <div className="space-y-2 px-6 mb-12">
+          <Button 
+            className="w-full" 
+            size="sm"
+            variant='outline'
+            onClick={handleSignIn}
+          >
+            Sign In
+          </Button>
+          <Button 
+            variant="outline" 
+            className="w-full" 
+            size="sm"
+            onClick={handleSignUp}
+          >
+            Sign Up
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

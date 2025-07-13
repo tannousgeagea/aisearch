@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Hero } from '@/components/Hero';
+import { Hero } from '@/components/common/Hero';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Sparkles, Search, Zap, ArrowRight } from 'lucide-react';

@@ -89,7 +89,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
         <p className="text-muted-foreground">Choose the AI model to analyze your image</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-1">
+      <div className="grid gap-4 md:grid-cols-2">
         {models.map((model) => {
           const IconComponent = model.icon;
           const isSelected = selectedModel === model.id;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ImageUpload } from '@/components/ImageUpload';
-import { ModelSelector } from '@/components/ModelSelector';
-import { CaptionResults } from '@/components/CaptionResults';
+import { ImageUpload } from '@/components/caption/ImageUpload';
+import { ModelSelector } from '@/components/caption/ModelSelector';
+import { CaptionResults } from '@/components/caption/CaptionResults';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Sparkles, Zap, Upload, Bot } from 'lucide-react';
@@ -95,7 +95,7 @@ const CaptionPage = () => {
         {/* Main Interface */}
         <div className="space-y-12">
           {/* Upload and Model Selection */}
-          <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-8 mx-auto">
             {/* Image Upload */}
             <Card className="p-6">
               <div className="space-y-6">

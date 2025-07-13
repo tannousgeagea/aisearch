@@ -68,7 +68,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
           <img
             src={preview}
             alt="Selected"
-            className="w-full h-64 object-cover rounded-lg"
+            className="w-full object-cover rounded-lg"
           />
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <Button

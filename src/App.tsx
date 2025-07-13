@@ -3,18 +3,20 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import CaptionPage from "./pages/CaptionPage";
-import SearchPage from "./pages/SearchPage";
-import HistoryPage from "./pages/HistoryPage";
-import AboutPage from "./pages/AboutPage";
-import ProfilePage from "./pages/ProfilePage";
-import SettingsPage from "./pages/SettingsPage";
-import BillingPage from "./pages/BillingPage";
-import SecurityPage from "./pages/SecurityPage";
+import Home from "./pages/home/Home";
+import CaptionPage from "./pages/caption/CaptionPage";
+import SearchPage from "./pages/search/SearchPage";
+import HistoryPage from "./pages/history/HistoryPage";
+import AboutPage from "./pages/about/AboutPage";
+import ProfilePage from "./pages/profile/ProfilePage";
+import SettingsPage from "./pages/settings/SettingsPage";
+import BillingPage from "./pages/billing/BillingPage";
+import SecurityPage from "./pages/security/SecurityPage";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/layout/Layout";
 import { AuthProvider } from "./contexts/AuthContext";
+import SignInPage from "./pages/signin/SignInPage";
+import SignUpPage from "./pages/signup/SignUpPage";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +28,8 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <Routes>
+            <Route path="/signin" element={<SignInPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
             <Route path="/" element={<Layout />}>
               <Route path="/" element={<Home />} />
               <Route path="/caption" element={<CaptionPage />} />

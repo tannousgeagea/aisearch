@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Hero } from '@/components/Hero';
-import { ImageUpload } from '@/components/ImageUpload';
-import { ModelSelector } from '@/components/ModelSelector';
-import { CaptionResults } from '@/components/CaptionResults';
+import { Hero } from '@/components/common/Hero';
+import { ImageUpload } from '@/components/caption/ImageUpload';
+import { ModelSelector } from '@/components/caption/ModelSelector';
+import { CaptionResults } from '@/components/caption/CaptionResults';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Sparkles, Zap } from 'lucide-react';

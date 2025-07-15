@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { Sparkles, Zap, Upload, Bot } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { ImageAnalysisForm } from '@/components/caption/ImageAnalysisForm';
 import { AnalysisResults } from '@/components/caption/AnalysisResults';
 import { AnalysisResult } from '@/hooks/useImageAnalysis';
+import { ComparisonResult } from '@/hooks/useMultiModelAnalysis';
 import { StreamingChunk } from '@/hooks/useStreamImageAnalysis';
+import { ModelComparisonForm } from '@/components/compare/ModelComparisonForm'
+import { ModelComparisonResults } from '@/components/compare/ModelComparisonResults';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Sparkles, Users, Bot } from 'lucide-react';
 import { useStreamingTypingEffect } from '@/hooks/useTypingEffect';
 
 
@@ -19,6 +23,7 @@ interface Caption {
 const CaptionPage = () => {
   const [streamingText, setLiveText] = useState('');
   const [results, setResults] = useState<AnalysisResult[]>([]);
+  const [comparisonResults, setComparisonResults] = useState<ComparisonResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
   const displayText = useStreamingTypingEffect(streamingText, isStreaming, 15);
@@ -27,6 +32,10 @@ const CaptionPage = () => {
     setResults(prev => [result, ...prev]);
     setIsStreaming(false);
     setLiveText('');
+  };
+
+  const handleComparisonComplete = (results: ComparisonResult[]) => {
+    setComparisonResults(results);
   };
 
   const handleChunk = (chunk: StreamingChunk) => {
@@ -51,20 +60,51 @@ const CaptionPage = () => {
 
         {/* Main Interface */}
         <div className="space-y-12">
-          {/* Analysis Form */}
-          <div className="max-w-4xl mx-auto">
-            <ImageAnalysisForm onAnalysisComplete={handleAnalysisComplete} onChunk={handleChunk} />
-          </div>
-          
-          {/* Results Section */}
-          <div className="max-w-4xl mx-auto">
-            <AnalysisResults
-              results={results}
-              liveText={displayText}
-              loading={loading}
-              isStreaming={isStreaming}
-            />
-          </div>
+          <Tabs defaultValue="single" className="space-y-8">
+            <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto">
+              <TabsTrigger value="single" className="gap-2">
+                <Bot className="h-4 w-4" />
+                Single Model
+              </TabsTrigger>
+              <TabsTrigger value="compare" className="gap-2">
+                <Users className="h-4 w-4" />
+                Compare Models
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Analysis Form */}
+            <TabsContent value="single" className="space-y-12">
+              <div className="max-w-4xl mx-auto">
+                <ImageAnalysisForm onAnalysisComplete={handleAnalysisComplete} onChunk={handleChunk} />
+              </div>
+              
+              {/* Results Section */}
+              <div className="max-w-4xl mx-auto">
+                <AnalysisResults
+                  results={results}
+                  liveText={displayText}
+                  loading={loading}
+                  isStreaming={isStreaming}
+                />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="compare" className="space-y-12">
+              {/* Comparison Form */}
+              <div className="max-w-4xl mx-auto">
+                <ModelComparisonForm onComparisonComplete={handleComparisonComplete} />
+              </div>
+              
+              {/* Comparison Results Section */}
+              <div className="w-full">
+                <ModelComparisonResults
+                  results={comparisonResults}
+                  loading={false}
+                />
+              </div>
+            </TabsContent>
+          </Tabs>
+
         </div>
       </div>
     </div>
